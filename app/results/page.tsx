@@ -1,10 +1,10 @@
 "use client";
-
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 
-export default function ResultsPage() {
+function ResultsContent() {
   const searchParams = useSearchParams();
   const animal = searchParams.get("animal");
   const need = searchParams.get("need");
@@ -130,5 +130,21 @@ export default function ResultsPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-black text-white">
+          <div className="mx-auto max-w-3xl px-6 py-10">
+            <p className="text-zinc-400">Loading results...</p>
+          </div>
+        </main>
+      }
+    >
+      <ResultsContent />
+    </Suspense>
   );
 }
